@@ -1,0 +1,28 @@
+version: 1
+
+project:
+    name: SwipQAWebgoat
+    branch: CoverityBom
+    revision:
+        name: webgoat
+        date: '2016-11-01T12:32:00-0600'
+        modified: false
+
+capture:
+    # Specify non-compiled artifacts to capture.
+    fileSystem:
+        javascript:
+            extensions: [ 'js', 'javascript' ]
+            files:
+                - directory: webgoat-container/src/main/webapp/js
+                - directory: webgoat-container/src/main/webapp/js/goatApp
+        binaries:
+            files:
+            - file: webgoat-standalone/target/webgoat-standalone-7.1-SNAPSHOT-exec.jar
+            - file: webgoat-standalone/target/webgoat-standalone-7.1-SNAPSHOT.jar
+
+
+install:
+    coverity:
+    protecodesc:
+
