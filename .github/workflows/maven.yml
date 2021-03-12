@@ -17,7 +17,7 @@ jobs:
         ioServerUrl: ${{secrets.IO_SERVER_URL}}
         ioServerToken: ${{secrets.IO_SERVER_TOKEN}}        
         workflowServerUrl: ${{secrets.WORKFLOW_SERVER_URL}}
-        additionalWorkflowArgs: "--polaris.url=${{secrets.POLARIS_SERVER_URL}} --IS_SAST_ENABLED=true --IS_SCA_ENABLED=true --github.token=${{secrets.GH_ATOKEN}} --detect.project.name=manojrbsnps/Testproj --detect.project.version.name=1.0 --polaris.project.name=manojrbsnps/Testproj --polaris.token=${{secrets.POLARIS_ACCESS_TOKEN}} --jira.auth.token=${{secrets.JIRA_AUTH_TOKEN}} --sensitive.package.pattern='.*(.java)' --jira.project.name=DEV --jira.api.url=https://dev-io.atlassian.net/rest/api/latest --jira.username=badyanka@synopsys.com --jira.issues.query=project=DEV --blackduck.project.name=manojrbsnps/Testproj:1.0 --blackduck.url=${{secrets.BLACKDUCK_URL}} --blackduck.api.token=${{secrets.BLACKDUCK_TOKEN}}"
+        additionalWorkflowArgs: "--polaris.url=${{secrets.POLARIS_SERVER_URL}} --github.token=${{secrets.GH_ATOKEN}} --detect.project.name=manojrbsnps/webgoat --detect.project.version.name=1.0 --polaris.project.name=manojrbsnps/webgoat --polaris.token=${{secrets.POLARIS_ACCESS_TOKEN}} --jira.auth.token=${{secrets.JIRA_AUTH_TOKEN}}--sensitive.package.pattern='.*(.java)' --jira.project.name=DEV --jira.api.url=https://altair-dev01.dev.polaris.synopsys.com/rest/api/latest --jira.username=badyanka@synopsys.com --jira.issues.query=project=DEV --blackduck.project.name=manojrbsnps/webgoat:1.0 --blackduck.url=${{secrets.BLACKDUCK_URL}} --blackduck.api.token=${{secrets.BLACKDUCK_TOKEN}}"
     - name: Static Analysis with Polaris
       if: ${{steps.prescription.outputs.sastScan == 'true'}}
       run: |
@@ -30,7 +30,7 @@ jobs:
       if: ${{steps.prescription.outputs.scaScan == 'true' }}
       uses: blackducksoftware/github-action@v2
       with:
-         args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_TOKEN}}" --detect.project.name=manojrbsnps/Testproj --detect.project.version.name=1.0 --detect.tools="DETECTOR" --blackduck.trust.cert=true'
+         args: '--blackduck.url="${{ secrets.BLACKDUCK_URL}}" --blackduck.api.token="${{ secrets.BLACKDUCK_TOKEN}}" --detect.project.name=manojrbsnps/webgoat --detect.project.version.name=1.0 --detect.tools="DETECTOR" --blackduck.trust.cert=true'
     - name: Synopsys Intelligent Security Scan
       if: ${{steps.prescription.outputs.sastScan == 'true' || steps.prescription.outputs.scaScan == 'true'}}
       uses: synopsys-sig/intelligent-security-scan@48eedfcd42bc342a294dc495ac452797b2d9ff08
@@ -38,10 +38,10 @@ jobs:
         ioServerURL: ${{secrets.IO_SERVER_URL}}
         ioServerToken: ${{secrets.IO_SERVER_TOKEN}}
         workflowServerUrl: ${{secrets.WORKFLOW_SERVER_URL}}
-        additionalWorkflowArgs: "--polaris.url=${{secrets.POLARIS_SERVER_URL}} --IS_SAST_ENABLED=${{steps.prescription.outputs.sastScan}} --IS_SCA_ENABLED=${{steps.prescription.outputs.scaScan}} --github.token=${{secrets.GH_ATOKEN}} --polaris.project.name=manojrbsnps/Testproj --polaris.token=${{secrets.POLARIS_ACCESS_TOKEN}} --jira.auth.token=${{secrets.JIRA_AUTH_TOKEN}} --sensitive.package.pattern='.*(.java)' --jira.project.name=DEV --jira.api.url=https://dev-io.atlassian.net/rest/api/latest --jira.username=badyanka@synopsys.com --detect.project.name=manojrbsnps/Testproj --detect.project.version.name=1.0 --jira.issues.query=project=DEV --blackduck.project.name=manojrbsnps/Testproj:1.0 --blackduck.url=${{secrets.BLACKDUCK_URL}} --blackduck.api.token=${{secrets.BLACKDUCK_TOKEN}}"        
+        additionalWorkflowArgs: "--polaris.url=${{secrets.POLARIS_SERVER_URL}} --IS_SAST_ENABLED=true --IS_SCA_ENABLED=true --github.token=${{secrets.GH_ATOKEN}} --polaris.project.name=manojrbsnps/webgoat --polaris.token=${{secrets.POLARIS_ACCESS_TOKEN}} --jira.auth.token=${{secrets.JIRA_AUTH_TOKEN}} --sensitive.package.pattern='.*(.java)' --jira.project.name=DEV --jira.api.url=https://altair-dev01.dev.polaris.synopsys.com/rest/api/latest --jira.username=badyanka@synopsys.com --detect.project.name=manojrbsnps/webgoat --detect.project.version.name=1.0 --jira.issues.query=project=DEV --blackduck.project.name=manojrbsnps/webgoat:1.0 --blackduck.url=${{secrets.BLACKDUCK_URL}} --blackduck.api.token=${{secrets.BLACKDUCK_TOKEN}}"        
         stage: "WORKFLOW"
     - name: Upload SARIF file
-      if: ${{steps.prescription.outputs.sastScan == 'true' }}
+     # if: ${{steps.prescription.outputs.sastScan == 'true' }}
       uses: github/codeql-action/upload-sarif@v1
       with:
         # Path to SARIF file relative to the root of the repository
