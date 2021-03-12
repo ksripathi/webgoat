@@ -3,7 +3,7 @@ application:
   appId: manojrbsnps/webgoat
   assetId: manojrbsnps/webgoat
   appType: Webapp
-  release: <RELEASE_TYPE>
+  release: <<RELEASE_TYPE>>
   microservice: false
   projectLanguage: Java
   platformVersion: Java 8
