@@ -42,7 +42,7 @@ connectors:
     issuetype: Bug
     projectkey: <<JIRA_PROJECT_NAME>>
     assignee: <<JIRA_ASSIGNEE>>
-    url: https://dev-io.atlassian.net
+    url: https://altair-dev01.dev.polaris.synopsys.com
     username: <<JIRA_USERNAME>>
     authtoken: <<JIRA_AUTH_TOKEN>>
 - connector_name: github
