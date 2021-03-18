@@ -72,10 +72,6 @@ buildbreaker:
   overallseverity:
   - high
 tool_information:
-- tool_name: coverity
-  enabled: false
-  fields:
-    file_path: coverity-results.json
 - tool_name: polaris
   enabled: true
   fields:
