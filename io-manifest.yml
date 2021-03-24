@@ -2,6 +2,7 @@
 application:
   appId: manojrbsnps/webgoat
   assetId: manojrbsnps/webgoat
+  appName: TEST
   appType: Webapp
   release: <<RELEASE_TYPE>>
   microservice: false
