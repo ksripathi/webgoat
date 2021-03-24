@@ -13,6 +13,15 @@ jobs:
       CHECKERS: --all --webapp-security 
     steps:
     - uses: actions/checkout@v2
+    - name: Public IP
+      id: ip
+      uses: haythem/public-ip@v1.2
+
+    - name: Print Public IP
+      run: |
+        echo ${{ steps.ip.outputs.ipv4 }}
+        echo ${{ steps.ip.outputs.ipv6 }}
+   
     - name: IO Scan
       id: prescription
       uses: synopsys-sig/intelligent-security-scan@48eedfcd42bc342a294dc495ac452797b2d9ff08
