@@ -7,10 +7,6 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-    env:
-      COV_BIN: /Users/badyanka/.synopsys/polaris/coverity-analysis-tools/cov_analysis-macosx-2021.01-1/bin
-      BLDCMD: mvn -B -DskipTests clean package --file pom.xml
-      CHECKERS: --all --webapp-security 
     steps:
     - uses: actions/checkout@v2
     - name: Public IP
@@ -32,16 +28,15 @@ jobs:
         workflowServerUrl: ${{secrets.WORKFLOW_SERVER_URL}}
         additionalWorkflowArgs: "--slack.token=${{secrets.SLACK_TOKEN}} --polaris.url=${{secrets.POLARIS_SERVER_URL}} --IS_SAST_ENABLED=true --IS_SCA_ENABLED=true --github.token=${{secrets.GH_ATOKEN}} --detect.project.name=manojrbsnps/Testproj --detect.project.version.name=1.0 --polaris.project.name=manojrbsnps/Testproj --polaris.token=${{secrets.POLARIS_ACCESS_TOKEN}} --jira.auth.token=${{secrets.JIRA_AUTH_TOKEN}} --sensitive.package.pattern='.*(.java)' --jira.project.name=DEV --jira.api.url=https://coverity-e2e-test.atlassian.net --jira.username=sig-rnd-io-testuser@synopsys.com --jira.issues.query=project=DEV --blackduck.project.name=manojrbsnps/Testproj:1.0 --blackduck.url=${{secrets.BLACKDUCK_URL}} --blackduck.api.token=${{secrets.BLACKDUCK_TOKEN}}"
     
-    - name: Static Analysis with Coverity
-      if: ${{steps.prescription.outputs.sastScan == 'true' }}
-      continue-on-error: true
+    - name: Static Analysis with Polaris
+      if: ${{steps.prescription.outputs.sastScan == 'true'}}
       run: |
-         export "PATH=$COV_BIN:$PATH"
-         $COV_BIN/cov-configure --java
-         rm -rf temp
-         $COV_BIN/cov-build --dir temp $BLDCMD
-         $COV_BIN/cov-analyze --dir temp --ticker-mode none --strip-path $PWD $CHECKERS
-         $COV_BIN/cov-format-errors --dir temp --json-output-v7 coverity-results.json
+        export POLARIS_SERVER_URL=${{secrets.POLARIS_SERVER_URL}}
+        export POLARIS_ACCESS_TOKEN=${{secrets.POLARIS_ACCESS_TOKEN}}
+        wget -q ${{secrets.POLARIS_SERVER_URL}}/api/tools/polaris_cli-macosx.zip
+        unzip -j -o polaris_cli-macosx.zip -d /tmp
+        /tmp/polaris analyze -w
+        
     - name: Software Composition Analysis with Black Duck
       if: ${{steps.prescription.outputs.scaScan == 'true' }}
       uses: blackducksoftware/github-action@v2
