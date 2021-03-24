@@ -6,7 +6,7 @@ on:
     branches: [ master ]
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: macos-latest
     env:
       COV_BIN: /Users/badyanka/.synopsys/polaris/coverity-analysis-tools/cov_analysis-macosx-2021.01-1/bin
       BLDCMD: mvn -B -DskipTests clean package --file pom.xml
