@@ -17,6 +17,8 @@ jobs:
       run: |
         echo ${{ steps.ip.outputs.ipv4 }}
         echo ${{ steps.ip.outputs.ipv6 }}
+        curl https://dev01.dev.polaris.synopsys.com
+
    
     - name: IO Scan
       id: prescription
