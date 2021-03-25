@@ -35,7 +35,7 @@ jobs:
       run: |
         export POLARIS_SERVER_URL=${{secrets.POLARIS_SERVER_URL}}
         export POLARIS_ACCESS_TOKEN=${{secrets.POLARIS_ACCESS_TOKEN}}
-        echo "curl https://dev01.dev.polaris.synopsys.com"
+        echo "command working"
         curl https://dev01.dev.polaris.synopsys.com
         echo "wget -q https://dev01.dev.polaris.synopsys.com/api/tools/polaris_cli-macosx.zip"
         wget -q https://dev01.dev.polaris.synopsys.com/api/tools/polaris_cli-macosx.zip
