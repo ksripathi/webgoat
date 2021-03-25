@@ -37,7 +37,10 @@ jobs:
         export POLARIS_ACCESS_TOKEN=${{secrets.POLARIS_ACCESS_TOKEN}}
         curl https://dev01.dev.polaris.synopsys.com
         wget -q https://dev01.dev.polaris.synopsys.com/api/tools/polaris_cli-macosx.zip
+        echo "polaris cli completed"
         unzip -j -o polaris_cli-macosx.zip -d /tmp
+        echo "unzip polaris cli completed"
+        echo "Running polaris cli"
         /tmp/polaris analyze -w
         
     - name: Software Composition Analysis with Black Duck
